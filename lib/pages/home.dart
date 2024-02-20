@@ -49,8 +49,9 @@ class MyHomePage extends ConsumerWidget {
                     motion: const ScrollMotion(),
                     children: [
                       SlidableAction(
-                        onPressed: (context) =>
-                            ref.watch(todoProvider.notifier).deleteTodo(activeTodos[index].todoId),
+                        onPressed: (context) => ref
+                            .watch(todoProvider.notifier)
+                            .deleteTodo(activeTodos[index].todoId),
                         icon: Icons.delete,
                         backgroundColor: Colors.red,
                         borderRadius:
@@ -72,18 +73,29 @@ class MyHomePage extends ConsumerWidget {
                       )
                     ],
                   ),
-                  child: ListTile(
-                    title: Text(activeTodos[index].content),
+                  child: Container(
+                    margin: const EdgeInsets.all(0),
+                    padding: const EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                        color: Colors.grey[200],
+                        borderRadius: BorderRadius.circular(18)),
+                    child: ListTile(
+                      title: Center(child: Text(activeTodos[index].content)),
+                    ),
                   ));
             }
           }),
-      floatingActionButton: ElevatedButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: () {
           // Navigate to the AddTodo page
           Navigator.of(context)
               .push(MaterialPageRoute(builder: (context) => const AddTodo()));
         },
-        child: const Text("Add a Todo"),
+        backgroundColor: Colors.black,
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
