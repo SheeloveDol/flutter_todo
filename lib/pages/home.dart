@@ -50,7 +50,7 @@ class MyHomePage extends ConsumerWidget {
                     children: [
                       SlidableAction(
                         onPressed: (context) =>
-                            ref.watch(todoProvider.notifier).deleteTodo(index),
+                            ref.watch(todoProvider.notifier).deleteTodo(activeTodos[index].todoId),
                         icon: Icons.delete,
                         backgroundColor: Colors.red,
                         borderRadius:
@@ -64,7 +64,7 @@ class MyHomePage extends ConsumerWidget {
                       SlidableAction(
                         onPressed: (context) => ref
                             .watch(todoProvider.notifier)
-                            .completeTodo(index),
+                            .completeTodo(activeTodos[index].todoId),
                         icon: Icons.check,
                         backgroundColor: Colors.green,
                         borderRadius:
