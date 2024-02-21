@@ -25,22 +25,32 @@ class CompletedTodo extends ConsumerWidget {
       body: ListView.builder(
           itemCount: completedTodos.length,
           itemBuilder: (context, index) {
-            return Slidable(
-                startActionPane: ActionPane(
-                  motion: const ScrollMotion(),
-                  children: [
-                    SlidableAction(
-                      onPressed: (context) =>
-                          ref.watch(todoProvider.notifier).deleteTodo(completedTodos[index].todoId),
-                      icon: Icons.delete,
-                      backgroundColor: Colors.red,
-                      borderRadius: const BorderRadius.all(Radius.circular(18)),
-                    )
-                  ],
-                ),
-                child: ListTile(
-                  title: Text(completedTodos[index].content),
-                ));
+            return Container(
+              margin: const EdgeInsets.all(8.0),
+              child: Slidable(
+                  startActionPane: ActionPane(
+                    motion: const ScrollMotion(),
+                    children: [
+                      SlidableAction(
+                        onPressed: (context) =>
+                            ref.watch(todoProvider.notifier).deleteTodo(completedTodos[index].todoId),
+                        icon: Icons.delete,
+                        backgroundColor: Colors.red,
+                        borderRadius: const BorderRadius.all(Radius.circular(18)),
+                      )
+                    ],
+                  ),
+                  child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                      padding: const EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(18)),
+                      child: ListTile(
+                        title: Center(child: Text(completedTodos[index].content)),
+                      ),
+                    )),
+            );
           }),
 
       // This trailing comma makes auto-formatting nicer for build methods.

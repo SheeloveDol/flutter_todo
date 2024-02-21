@@ -29,6 +29,15 @@ class MyHomePage extends ConsumerWidget {
       body: ListView.builder(
           itemCount: activeTodos.length + 1,
           itemBuilder: (context, index) {
+            if (activeTodos.isEmpty) {
+              return const Padding(
+                padding: EdgeInsets.only(top: 350.0),
+                child: Center(
+                  child: Text("No todos yet! Add a todo to get started!"),
+                ),
+              );
+            }
+            // If the index is equal to the length of the activeTodos list, return a button to navigate to the CompletedTodo page
             if (index == activeTodos.length) {
               if (completedTodos.isEmpty)
                 return Container();
@@ -44,45 +53,48 @@ class MyHomePage extends ConsumerWidget {
                 );
               }
             } else {
-              return Slidable(
-                  startActionPane: ActionPane(
-                    motion: const ScrollMotion(),
-                    children: [
-                      SlidableAction(
-                        onPressed: (context) => ref
-                            .watch(todoProvider.notifier)
-                            .deleteTodo(activeTodos[index].todoId),
-                        icon: Icons.delete,
-                        backgroundColor: Colors.red,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(18)),
-                      )
-                    ],
-                  ),
-                  endActionPane: ActionPane(
-                    motion: const ScrollMotion(),
-                    children: [
-                      SlidableAction(
-                        onPressed: (context) => ref
-                            .watch(todoProvider.notifier)
-                            .completeTodo(activeTodos[index].todoId),
-                        icon: Icons.check,
-                        backgroundColor: Colors.green,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(18)),
-                      )
-                    ],
-                  ),
-                  child: Container(
-                    margin: const EdgeInsets.all(0),
-                    padding: const EdgeInsets.all(16.0),
-                    decoration: BoxDecoration(
-                        color: Colors.grey[200],
-                        borderRadius: BorderRadius.circular(18)),
-                    child: ListTile(
-                      title: Center(child: Text(activeTodos[index].content)),
+              return Container(
+                margin: const EdgeInsets.all(8.0),
+                child: Slidable(
+                    startActionPane: ActionPane(
+                      motion: const ScrollMotion(),
+                      children: [
+                        SlidableAction(
+                          onPressed: (context) => ref
+                              .watch(todoProvider.notifier)
+                              .deleteTodo(activeTodos[index].todoId),
+                          icon: Icons.delete,
+                          backgroundColor: Colors.red,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(18)),
+                        )
+                      ],
                     ),
-                  ));
+                    endActionPane: ActionPane(
+                      motion: const ScrollMotion(),
+                      children: [
+                        SlidableAction(
+                          onPressed: (context) => ref
+                              .watch(todoProvider.notifier)
+                              .completeTodo(activeTodos[index].todoId),
+                          icon: Icons.check,
+                          backgroundColor: Colors.green,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(18)),
+                        )
+                      ],
+                    ),
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 16.0),
+                      padding: const EdgeInsets.all(16.0),
+                      decoration: BoxDecoration(
+                          color: Colors.grey[200],
+                          borderRadius: BorderRadius.circular(18)),
+                      child: ListTile(
+                        title: Center(child: Text(activeTodos[index].content)),
+                      ),
+                    )),
+              );
             }
           }),
       floatingActionButton: FloatingActionButton(
